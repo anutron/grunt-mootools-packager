@@ -50,6 +50,15 @@ Default value: `grunt.util.linefeed`
 
 The delimeter to join all the source files together.
 
+#### options.customFunction
+Type: `Function`
+Arguments:
+
+* (*options*, Object) The Grunt task options object.
+* (*buffer*, Array) The array with the buffered definitions for each source file.
+
+This *function* should return the `buffer` *array* which will be used from there on in the packager. 
+
 #### options.name
 Type: `String` or `Object`
 

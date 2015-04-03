@@ -164,6 +164,9 @@ module.exports = function(grunt) {
 			// load each component into the buffer list
 			(only ? toArray(only) : set).forEach(loadComponent);
 
+			// use a custom function to handle the buffered files
+			if (options.customFunction)  buffer = options.customFunction.call(this, options, buffer);
+
 			// convert the buffer into the actual source
 			buffer = buffer.map(function(def){ return def.source; }).join(options.separator);
 
