@@ -145,8 +145,10 @@ grunt.initConfig({
 
 #### options.exclude
 Type: `Array`
+Syntax: `['PackageNameA/*'<, 'PackageNameB/*', ...>] `
 
-The specific dependencies packages to exclude from the compilation. This allows you to build a file and exclude some portion of it's dependencies. Example:
+The specific dependencies packages to exclude from the compilation.
+For example, adding `exclude: ['Core/*']` in the Gruntfile options would exclude all Core dependencies from output file.
 
 ```js
 grunt.initConfig({

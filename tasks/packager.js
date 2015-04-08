@@ -16,6 +16,7 @@ module.exports = function(grunt) {
 	var SL_STRIP_EXP = ['\\/[\\/*]\\s*<', '>(.*?)<\\/', '>(?:\\s*\\*\\/)?'];
 	var ML_STRIP_EXP = ['\\/[\\/*]\\s*<', '>([.\\s\\S]*?)<\\/', '>(?:\\s*\\*\\/)?'];
 	var PACKAGE_DOT_STAR = /(.*)\/\*$/;
+	var PACKAGE_SLASH = /^([^\/]+\/)/;
 
 	// ensures the definition has a name and a provision
 	function validDefinition(definition) {
@@ -169,13 +170,15 @@ module.exports = function(grunt) {
 
 			// remove unwanted dependencies
 			if (exclude){
-				var toExclude = toArray(exclude);
-				buffer = buffer.filter(function(def){
-					var shouldKeep = toExclude.filter(function(dependency){
-						var match = dependency.match(/([^\*]+)/);
-						return match ? def.key.indexOf(match[1]) != 0 : true;
+				var toExclude = toArray(exclude); 
+				buffer = buffer.filter(function(definition){
+					var shouldKeep = true;
+					var definitionMatch = definition.key.match(PACKAGE_SLASH)[1];
+					toExclude.forEach(function(dependency){
+						var dependencyMatch = dependency.match(PACKAGE_SLASH)[1];
+						if (dependencyMatch == definitionMatch) shouldKeep = false;
 					});
-					return shouldKeep.length;
+					return shouldKeep;
 				});
 			}
 
